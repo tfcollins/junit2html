@@ -310,7 +310,7 @@ class Suite(AnchorBase, ToJunitXmlBase):
         Return all the passing testcases
         :return:
         """
-        return [test for test in self.all() if not test.failed() and not test.skipped()]
+        return [test for test in self.all() if not test.failed() and not test.skipped]
 
 
 class Junit(object):
