@@ -224,10 +224,13 @@ class Suite(AnchorBase, ToJunitXmlBase):
     """
     Contains test cases (usually only one suite per report)
     """
+
     def __init__(self):
         super(Suite, self).__init__()
         self.name = None
         self.duration = 0
+        self.timestamp = None
+        self.hostname = None
         self.classes = collections.OrderedDict()
         self.package = None
         self.properties = []
@@ -375,7 +378,11 @@ class Junit(object):
             cursuite.name = clean_xml_attribute(suite, "name", default="suite-" + str(suitecount))
             cursuite.package = clean_xml_attribute(suite, "package")
 
-            cursuite.duration = float(suite.attrib.get("time", '0').replace(',', '') or '0')
+            cursuite.duration = float(
+                suite.attrib.get("time", "0").replace(",", "") or "0"
+            )
+
+            cursuite.timestamp = clean_xml_attribute(suite, "timestamp")
 
             for element in suite:
                 if element.tag == "error":
